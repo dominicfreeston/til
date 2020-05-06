@@ -1,0 +1,26 @@
+* TIL
+** There is only the classpath                       :clojure:java:classpath:
+[2020-05-06 Wed]
+
+Tools like [[https://leiningen.org/][leiningen]] add concepts like ~:resources-path~ to help it figure out how to bundle thing and (has defaults by convention like the ~resources~ directory), but ultimately it all gets added to the classpath. The [[https://clojure.org/guides/deps_and_cli][clojure cli]] only adds the ~src~ directory to the classpath by default, so when using code from a leiningen project as inspiration it's worth remembering that accessing resources won't work unless the appropriate paths are added to the ~:paths~ (or ~:extra-paths~ in aliases) property in the ~deps.edn~ file.
+
+Example minimal deps.edn file:
+
+#+begin_src clojure
+  {:deps
+   {;; maven/clojars lib
+    clj-time {:mvn/version "0.14.2"}
+    ;; local lib
+    time-lib {:local/root "/path/to/time-lib"}
+    ;; git lib
+    github-yourname/time-lib {:git/url "https://github.com/yourname/time-lib"
+			      :sha "04d2744549214b5cba04002b6875bdf59f9d88b6"}}
+ 
+   :paths
+   ["src", "resources"]
+
+   :aliases
+   {:test
+    {:extra-paths
+     ["test"]}}}
+#+end_src
