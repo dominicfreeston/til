@@ -1,4 +1,9 @@
 * TIL
+** Dismiss completion on iOS                                      :iOS:swift:
+[2020-05-11 Mon]
+
+Calling ~dismiss~ with a completion block on iOS 13 will cause the block to be run whether something needed to be dismissed or not, whilst on iOS 12 the block will not be run. Can be worked around by checking for the presence of a ~presentedViewController~.
+
 ** There is only the classpath                       :clojure:java:classpath:
 [2020-05-06 Wed]
 
